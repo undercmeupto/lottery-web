@@ -1,0 +1,139 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>年终大抽奖 2025</title>
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+  <!-- 烟花画布层 -->
+  <canvas id="fireworks"></canvas>
+
+  <!-- 红灯笼装饰 -->
+  <div class="lantern left-1">🏮</div>
+  <div class="lantern right-1">🏮</div>
+  <div class="lantern left-2">🏮</div>
+  <div class="lantern right-2">🏮</div>
+  <div class="lantern left-3">🏮</div>
+  <div class="lantern right-3">🏮</div>
+  <div class="lantern left-4">🏮</div>
+  <div class="lantern right-4">🏮</div>
+  <div class="lantern center-left-1">🏮</div>
+  <div class="lantern center-right-1">🏮</div>
+  <div class="lantern center-left-2">🏮</div>
+  <div class="lantern center-right-2">🏮</div>
+  <div class="lantern bottom-left-1">🏮</div>
+  <div class="lantern bottom-right-1">🏮</div>
+  <div class="lantern bottom-left-2">🏮</div>
+  <div class="lantern bottom-right-2">🏮</div>
+
+  <div class="container">
+    <header>
+      <h1>🏆 年终大抽奖 2025 🏆</h1>
+      <div class="subtitle">Happy New Year Lottery</div>
+    </header>
+
+    <div class="controls">
+      <button onclick="importNames()" class="btn-primary">📁 导入名单</button>
+      <label class="btn-secondary">
+        🎵 选择音乐
+        <input type="file" id="musicInput" accept="audio/*" onchange="handleMusicUpload(event)" style="display:none">
+      </label>
+      <button id="musicBtn" onclick="toggleMusic()" class="btn-secondary" disabled>▶️ 播放音乐</button>
+      <button onclick="setupPrizes()" class="btn-secondary">🏆 设置奖项</button>
+    </div>
+
+    <!-- 奖项选择区域 -->
+    <div class="prize-section" id="prizeSection">
+      <h3>当前奖项：<span id="currentPrize">三等奖</span> - <span id="currentPrizeName">未设置</span></h3>
+      <div class="prize-buttons">
+        <button onclick="selectPrize(1)" class="prize-btn" data-prize="1">一等奖</button>
+        <button onclick="selectPrize(2)" class="prize-btn" data-prize="2">二等奖</button>
+        <button onclick="selectPrize(3)" class="prize-btn active" data-prize="3">三等奖</button>
+      </div>
+    </div>
+
+    <div class="participant-section">
+      <h3>参与名单 (<span id="count">0</span>人)</h3>
+      <div id="participants" class="participant-list"></div>
+    </div>
+
+    <div class="lottery-section">
+      <div class="winner-label">★★★ 中奖者 ★★★</div>
+      <div id="winner-display" class="winner-display">准备抽奖</div>
+    </div>
+
+    <div class="action-buttons">
+      <button id="startBtn" onclick="startLottery()" class="btn-start">开始抽奖</button>
+      <button onclick="resetLottery()" class="btn-reset">重置</button>
+    </div>
+
+    <div class="winners-section">
+      <h3>🎉 中奖名单 🎉</h3>
+      <div id="winners-list" class="winners-list"></div>
+    </div>
+
+    <div class="export-section">
+      <button onclick="exportResults()" class="btn-export">💾 导出结果</button>
+    </div>
+  </div>
+
+  <!-- 导入名单弹窗 -->
+  <div id="importModal" class="modal">
+    <div class="modal-content">
+      <span class="close" onclick="closeModal()">&times;</span>
+      <h2>导入名单</h2>
+      <p>请输入参与者名单，每行一个名字：</p>
+      <textarea id="nameInput" rows="10" placeholder="张三&#10;李四&#10;王五&#10;..."></textarea>
+      <div class="modal-buttons">
+        <button onclick="parseAndImport()" class="btn-primary">确定导入</button>
+        <label class="btn-secondary">
+          📂 上传文件
+          <input type="file" id="fileInput" accept=".txt,.csv" onchange="handleFileUpload(event)">
+        </label>
+        <button onclick="loadSampleData()" class="btn-secondary">使用示例数据</button>
+      </div>
+    </div>
+  </div>
+
+  <!-- 设置奖项弹窗 -->
+  <div id="prizeModal" class="modal">
+    <div class="modal-content">
+      <span class="close" onclick="closePrizeModal()">&times;</span>
+      <h2>设置奖项</h2>
+      <div class="prize-setup">
+        <div class="prize-input-group">
+          <label>一等奖名称：</label>
+          <input type="text" id="prize1Input" placeholder="例如：iPhone 15" value="iPhone 15">
+        </div>
+        <div class="prize-input-group">
+          <label>一等奖数量：</label>
+          <input type="number" id="prize1Count" placeholder="数量" value="1" min="0">
+        </div>
+        <div class="prize-input-group">
+          <label>二等奖名称：</label>
+          <input type="text" id="prize2Input" placeholder="例如：iPad Air" value="iPad Air">
+        </div>
+        <div class="prize-input-group">
+          <label>二等奖数量：</label>
+          <input type="number" id="prize2Count" placeholder="数量" value="2" min="0">
+        </div>
+        <div class="prize-input-group">
+          <label>三等奖名称：</label>
+          <input type="text" id="prize3Input" placeholder="例如：小米手环" value="小米手环">
+        </div>
+        <div class="prize-input-group">
+          <label>三等奖数量：</label>
+          <input type="number" id="prize3Count" placeholder="数量" value="3" min="0">
+        </div>
+      </div>
+      <div class="modal-buttons">
+        <button onclick="savePrizes()" class="btn-primary">保存设置</button>
+      </div>
+    </div>
+  </div>
+
+  <script src="script.js"></script>
+</body>
+</html>
