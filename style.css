@@ -59,25 +59,27 @@ body {
 /* ========== 红灯笼装饰 ========== */
 .lantern {
   position: fixed;
-  font-size: 80px;
+  width: 100px;
+  height: auto;
   z-index: 10;
-  filter: drop-shadow(0 4px 8px rgba(0, 0, 0, 0.3));
+  filter: drop-shadow(0 4px 12px rgba(0, 0, 0, 0.4));
   user-select: none;
+  pointer-events: none;
 }
 
 /* 顶部最外侧大灯笼 */
 .lantern.left-1 {
-  top: 15px;
+  top: 10px;
   left: 15px;
-  font-size: 100px;
+  width: 140px;
   animation: swing 3s ease-in-out infinite;
   transform-origin: top center;
 }
 
 .lantern.right-1 {
-  top: 15px;
+  top: 10px;
   right: 15px;
-  font-size: 100px;
+  width: 140px;
   animation: swing 3s ease-in-out infinite;
   animation-delay: 1.5s;
   transform-origin: top center;
@@ -85,18 +87,18 @@ body {
 
 /* 顶部第二排灯笼 */
 .lantern.left-2 {
-  top: 35px;
-  left: 120px;
-  font-size: 85px;
+  top: 25px;
+  left: 160px;
+  width: 120px;
   animation: swing 2.8s ease-in-out infinite;
   animation-delay: 0.3s;
   transform-origin: top center;
 }
 
 .lantern.right-2 {
-  top: 35px;
-  right: 120px;
-  font-size: 85px;
+  top: 25px;
+  right: 160px;
+  width: 120px;
   animation: swing 2.8s ease-in-out infinite;
   animation-delay: 1.8s;
   transform-origin: top center;
@@ -104,18 +106,18 @@ body {
 
 /* 顶部第三排灯笼 */
 .lantern.left-3 {
-  top: 70px;
-  left: 210px;
-  font-size: 70px;
+  top: 50px;
+  left: 280px;
+  width: 100px;
   animation: swing 2.6s ease-in-out infinite;
   animation-delay: 0.6s;
   transform-origin: top center;
 }
 
 .lantern.right-3 {
-  top: 70px;
-  right: 210px;
-  font-size: 70px;
+  top: 50px;
+  right: 280px;
+  width: 100px;
   animation: swing 2.6s ease-in-out infinite;
   animation-delay: 2.1s;
   transform-origin: top center;
@@ -123,18 +125,18 @@ body {
 
 /* 顶部第四排小灯笼 */
 .lantern.left-4 {
-  top: 100px;
-  left: 290px;
-  font-size: 55px;
+  top: 75px;
+  left: 380px;
+  width: 80px;
   animation: swing 2.4s ease-in-out infinite;
   animation-delay: 0.9s;
   transform-origin: top center;
 }
 
 .lantern.right-4 {
-  top: 100px;
-  right: 290px;
-  font-size: 55px;
+  top: 75px;
+  right: 380px;
+  width: 80px;
   animation: swing 2.4s ease-in-out infinite;
   animation-delay: 2.4s;
   transform-origin: top center;
@@ -142,18 +144,18 @@ body {
 
 /* 中部第一排灯笼 */
 .lantern.center-left-1 {
-  top: 35%;
+  top: 30%;
   left: 10px;
-  font-size: 90px;
+  width: 130px;
   animation: swing 3.2s ease-in-out infinite;
   animation-delay: 0.5s;
   transform-origin: top center;
 }
 
 .lantern.center-right-1 {
-  top: 35%;
+  top: 30%;
   right: 10px;
-  font-size: 90px;
+  width: 130px;
   animation: swing 3.2s ease-in-out infinite;
   animation-delay: 2s;
   transform-origin: top center;
@@ -163,7 +165,7 @@ body {
 .lantern.center-left-2 {
   top: 50%;
   left: 25px;
-  font-size: 75px;
+  width: 110px;
   animation: swing 3s ease-in-out infinite;
   animation-delay: 1s;
   transform-origin: top center;
@@ -172,7 +174,7 @@ body {
 .lantern.center-right-2 {
   top: 50%;
   right: 25px;
-  font-size: 75px;
+  width: 110px;
   animation: swing 3s ease-in-out infinite;
   animation-delay: 2.5s;
   transform-origin: top center;
@@ -180,18 +182,18 @@ body {
 
 /* 底部第一排灯笼 */
 .lantern.bottom-left-1 {
-  bottom: 120px;
+  bottom: 100px;
   left: 20px;
-  font-size: 95px;
+  width: 135px;
   animation: swing 3.5s ease-in-out infinite;
   animation-delay: 0.8s;
   transform-origin: top center;
 }
 
 .lantern.bottom-right-1 {
-  bottom: 120px;
+  bottom: 100px;
   right: 20px;
-  font-size: 95px;
+  width: 135px;
   animation: swing 3.5s ease-in-out infinite;
   animation-delay: 2.3s;
   transform-origin: top center;
@@ -199,18 +201,18 @@ body {
 
 /* 底部第二排灯笼 */
 .lantern.bottom-left-2 {
-  bottom: 60px;
-  left: 120px;
-  font-size: 70px;
+  bottom: 40px;
+  left: 160px;
+  width: 100px;
   animation: swing 3.3s ease-in-out infinite;
   animation-delay: 1.3s;
   transform-origin: top center;
 }
 
 .lantern.bottom-right-2 {
-  bottom: 60px;
-  right: 120px;
-  font-size: 70px;
+  bottom: 40px;
+  right: 160px;
+  width: 100px;
   animation: swing 3.3s ease-in-out infinite;
   animation-delay: 2.8s;
   transform-origin: top center;
