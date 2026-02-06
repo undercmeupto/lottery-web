@@ -347,6 +347,17 @@ function selectWinner() {
     time: new Date().toLocaleString('zh-CN')
   });
 
+  // 中奖时加大音乐音量
+  if (state.bgMusic && state.musicPlaying) {
+    state.bgMusic.volume = 0.9;  // 加大到90%
+    // 3秒后恢复正常音量
+    setTimeout(() => {
+      if (state.bgMusic) {
+        state.bgMusic.volume = 0.5;  // 恢复到50%
+      }
+    }, 3000);
+  }
+
   // 显示并庆祝
   displayWinner(winner, true);
   announceWinner(winner);
