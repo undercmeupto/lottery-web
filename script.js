@@ -361,7 +361,8 @@ function selectWinner() {
   // 显示并庆祝
   displayWinner(winner, true);
   announceWinner(winner);
-  launchFireworks();
+  launchFirecrackers();  // 鞭炮效果
+  setTimeout(() => launchFireworks(), 500);  // 鞭炮后放烟花
   createConfetti();
 
   updateUI();
@@ -403,6 +404,12 @@ function resetLottery() {
 
   document.getElementById('winner-display').textContent = '准备抽奖';
   document.getElementById('winner-display').classList.remove('announce');
+
+  // 清空鞭炮容器
+  const container = document.getElementById('firecrackers-container');
+  if (container) {
+    container.innerHTML = '';
+  }
 
   updateUI();
   updatePrizeDisplay();
@@ -569,6 +576,107 @@ function setupFireworks() {
 function launchFireworks() {
   if (state.fireworks) {
     state.fireworks.launch();
+  }
+}
+
+// ========== 鞭炮效果 ==========
+function launchFirecrackers() {
+  const container = document.getElementById('firecrackers-container');
+  if (!container) return;
+
+  // 创建爆炸闪光
+  const flash = document.createElement('div');
+  flash.className = 'flash';
+  document.body.appendChild(flash);
+  setTimeout(() => flash.remove(), 200);
+
+  // 创建两挂鞭炮
+  createFirecrackerString(container, 'left');
+  createFirecrackerString(container, 'right');
+
+  // 1秒后开始引爆
+  setTimeout(() => {
+    igniteFirecrackers();
+  }, 1000);
+}
+
+function createFirecrackerString(container, side) {
+  const string = document.createElement('div');
+  string.className = `firecracker-string ${side}`;
+  string.id = `firecracker-${side}`;
+
+  // 创建15个鞭炮
+  for (let i = 0; i < 15; i++) {
+    const firecracker = document.createElement('div');
+    firecracker.className = 'firecracker';
+    firecracker.innerHTML = '🧨';
+    firecracker.style.animationDelay = `${i * 0.05}s`;
+    string.appendChild(firecracker);
+  }
+
+  container.appendChild(string);
+}
+
+function igniteFirecrackers() {
+  const leftString = document.getElementById('firecracker-left');
+  const rightString = document.getElementById('firecracker-right');
+
+  if (leftString) igniteString(leftString);
+  if (rightString) {
+    setTimeout(() => igniteString(rightString), 200);
+  }
+}
+
+function igniteString(string) {
+  const firecrackers = string.querySelectorAll('.firecracker');
+  let index = 0;
+
+  function explodeNext() {
+    if (index >= firecrackers.length) {
+      // 所有鞭炮爆炸完毕，移除鞭炮串
+      setTimeout(() => {
+        string.remove();
+      }, 300);
+      return;
+    }
+
+    const firecracker = firecrackers[index];
+    firecracker.innerHTML = '💥';
+    firecracker.classList.add('explode');
+
+    // 创建爆炸粒子
+    createExplosionParticles(firecracker);
+
+    index++;
+    setTimeout(explodeNext, 80);  // 每80ms引爆一个
+  }
+
+  explodeNext();
+}
+
+function createExplosionParticles(element) {
+  const rect = element.getBoundingClientRect();
+  const x = rect.left + rect.width / 2;
+  const y = rect.top + rect.height / 2;
+  const colors = ['#FFD700', '#FF6B6B', '#FF4500', '#FFA500', '#FFFF00'];
+
+  for (let i = 0; i < 12; i++) {
+    const particle = document.createElement('div');
+    particle.className = 'explosion-particle';
+    particle.style.left = x + 'px';
+    particle.style.top = y + 'px';
+    particle.style.backgroundColor = colors[Math.floor(Math.random() * colors.length)];
+
+    const angle = (Math.PI * 2 / 12) * i;
+    const distance = 30 + Math.random() * 30;
+    const tx = Math.cos(angle) * distance;
+    const ty = Math.sin(angle) * distance;
+
+    particle.style.setProperty('--tx', tx + 'px');
+    particle.style.setProperty('--ty', ty + 'px');
+
+    document.body.appendChild(particle);
+    setTimeout(() => particle.remove(), 600);
   }
 }
 
